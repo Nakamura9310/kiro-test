@@ -30,28 +30,26 @@
 
 ## Components and Interfaces
 
-### 1. Hotkey Module (hotkey.rs)
-グローバルホットキーの監視と管理を担当。
+### 1. Application Entry Point (main.rs)
+アプリケーションの起動とメインフローを管理。
 
 ```rust
-pub struct HotkeyManager {
-    hotkey_id: i32,
-    registered: bool,
+pub struct App {
+    settings_manager: SettingsManager,
 }
 
-impl HotkeyManager {
-    pub fn new() -> Self;
-    pub fn register_hotkey(&mut self, modifiers: u32, vk_code: u32) -> Result<(), HotkeyError>;
-    pub fn unregister_hotkey(&mut self) -> Result<(), HotkeyError>;
-    pub fn check_messages(&self) -> Option<HotkeyEvent>;
+impl App {
+    pub fn new() -> Result<Self, AppError>;
+    pub fn run() -> Result<(), AppError>;
+    pub fn launch_overlay() -> Result<(), AppError>;
 }
 ```
 
 **実装詳細:**
-- `winapi` クレートでWin32 API `RegisterHotKey` / `UnregisterHotKey` を使用
-- `PeekMessage` でメッセージループを監視
-- デフォルトホットキー: `Ctrl + Shift + S`
-- `crossbeam-channel` でイベント通知
+- 直接オーバーレイアプリケーションを起動
+- 設定管理機能の統合
+- エラーハンドリングとログ出力
+- 将来的なホットキー機能への拡張性を保持
 
 ### 2. Capture Module (capture.rs)
 スクリーンキャプチャ機能を提供。
@@ -183,10 +181,17 @@ pub struct AppSettings {
     pub default_image_format: ImageFormat,
 }
 
+impl AppSettings {
+    pub fn load() -> Result<Self, AppError>;
+    pub fn save(&self) -> Result<(), AppError>;
+    pub fn get_hotkey_display_string(&self) -> String;
+    pub fn set_hotkey(&mut self, modifiers: u32, vk_code: u32);
+}
+
 impl Default for AppSettings {
     fn default() -> Self {
         Self {
-            hotkey_modifiers: winapi::um::winuser::MOD_CONTROL | winapi::um::winuser::MOD_SHIFT,
+            hotkey_modifiers: 0x0002 | 0x0004, // MOD_CONTROL | MOD_SHIFT
             hotkey_vk_code: 0x53, // 'S' key
             default_save_directory: None,
             default_image_format: ImageFormat::Png,
@@ -194,6 +199,30 @@ impl Default for AppSettings {
     }
 }
 ```
+
+### Settings Module (settings.rs)
+アプリケーション設定の管理を担当。
+
+```rust
+pub struct SettingsManager {
+    settings: AppSettings,
+    settings_path: PathBuf,
+}
+
+impl SettingsManager {
+    pub fn new() -> Result<Self, AppError>;
+    pub fn get_settings(&self) -> &AppSettings;
+    pub fn update_save_directory(&mut self, directory: Option<String>) -> Result<(), AppError>;
+    pub fn update_image_format(&mut self, format: ImageFormat) -> Result<(), AppError>;
+    pub fn save(&self) -> Result<(), AppError>;
+    pub fn reset_to_defaults(&mut self) -> Result<(), AppError>;
+}
+```
+
+### Hotkey Module (hotkey.rs) - Future Enhancement
+グローバルホットキーの監視と管理（将来実装予定）。
+
+**Note:** ホットキー機能は複雑なシステム統合が必要なため、コア機能完成後に実装予定。
 
 ## Error Handling
 

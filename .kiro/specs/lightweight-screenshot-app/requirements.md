@@ -8,13 +8,14 @@
 
 ### Requirement 1
 
-**User Story:** As a Windows PC user, I want to capture screenshots using a keyboard shortcut, so that I can quickly capture screen content without navigating through menus.
+**User Story:** As a Windows PC user, I want to launch the screenshot application manually, so that I can capture screen content when needed.
 
 #### Acceptance Criteria
 
-1. WHEN the user presses a predefined keyboard shortcut THEN the system SHALL launch the screenshot application
-2. WHEN the application launches THEN the system SHALL display a transparent overlay covering the entire screen
-3. WHEN the overlay is displayed THEN the system SHALL change the cursor to indicate selection mode
+1. WHEN the user runs the application THEN the system SHALL display a transparent overlay covering the entire screen
+2. WHEN the overlay is displayed THEN the system SHALL change the cursor to indicate selection mode
+3. WHEN the application launches THEN the system SHALL be ready for area selection immediately
+4. WHEN the user wants to exit THEN the system SHALL provide a clear way to close the application
 
 ### Requirement 2
 
@@ -103,3 +104,17 @@
 2. WHEN canceling THEN the system SHALL close the overlay and return to normal desktop
 3. WHEN the user closes the editing window without saving THEN the system SHALL prompt for confirmation
 4. WHEN confirmed to close THEN the system SHALL discard the current screenshot and close the application
+
+### Requirement 10 (Future Enhancement)
+
+**User Story:** As a user, I want to use keyboard shortcuts to launch the screenshot application, so that I can capture screenshots more quickly.
+
+#### Acceptance Criteria
+
+1. WHEN the user configures a global hotkey THEN the system SHALL register it with the operating system
+2. WHEN the hotkey is pressed THEN the system SHALL launch the screenshot overlay
+3. WHEN the user wants to change the hotkey THEN the system SHALL provide a settings interface
+4. WHEN the application starts THEN the system SHALL attempt to register the configured hotkey
+5. IF hotkey registration fails THEN the system SHALL still function with manual launch
+
+**Note:** This is a future enhancement and will be implemented after core screenshot functionality is complete.
