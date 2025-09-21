@@ -5,7 +5,9 @@
 
 pub mod types;
 pub mod capture;
+pub mod editor_app;
 
 // Re-export commonly used types
 pub use types::*;
 pub use capture::CaptureService;
+pub use editor_app::EditorApp;
