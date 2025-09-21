@@ -42,6 +42,14 @@ winapi = { version = "0.3", features = [
     "errhandlingapi",
 ] }
 
+[[example]]
+name = "capture_demo"
+doc-scrape-examples = true
+
+[[example]]
+name = "debug_capture"
+doc-scrape-examples = true
+
 [profile.release]
 opt-level = "z"
 lto = true

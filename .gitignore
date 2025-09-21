@@ -1,2 +1,6 @@
 .vscode/settings.json
 target
+
+# Example output directories
+screenshots/
+debug/
