@@ -21,7 +21,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         viewport: egui::ViewportBuilder::default()
             .with_inner_size([1024.0, 768.0])
             .with_min_inner_size([800.0, 600.0])
-            .with_title("軽量スクリーンショットアプリ")
+            .with_title("Lightweight Screenshot App")
             .with_icon(load_icon()),
         ..Default::default()
     };
@@ -30,7 +30,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     // Run the native egui application
     eframe::run_native(
-        "軽量スクリーンショットアプリ",
+        "Lightweight Screenshot App",
         native_options,
         Box::new(|_cc| {
             // Create and return the editor application
