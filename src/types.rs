@@ -10,7 +10,7 @@ use thiserror::Error;
 use uuid::Uuid;
 
 /// Represents a screen capture area with DPI information
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct CaptureArea {
     pub bounds: Rect,
     pub screen_index: usize,
@@ -30,7 +30,7 @@ impl Default for CaptureArea {
 }
 
 /// Information about a screen/monitor
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct ScreenInfo {
     pub index: usize,
     pub bounds: Rect,
@@ -40,7 +40,7 @@ pub struct ScreenInfo {
 }
 
 /// Annotation item that can be placed on an image
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct AnnotationItem {
     pub id: Uuid,
     pub position: Pos2,
@@ -99,7 +99,7 @@ impl AnnotationItem {
 }
 
 /// Types of annotations that can be added to images
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum AnnotationType {
     Rectangle {
         size: Vec2,
@@ -114,7 +114,7 @@ pub enum AnnotationType {
 }
 
 /// Application settings
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct AppSettings {
     pub hotkey_modifiers: u32,
     pub hotkey_vk_code: u32,
@@ -135,7 +135,7 @@ impl Default for AppSettings {
 }
 
 /// Supported image formats for saving
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub enum ImageFormat {
     Png,
     Jpg,
@@ -168,7 +168,7 @@ pub enum AppError {
 pub type AppResult<T> = Result<T, AppError>;
 
 /// Hotkey event information
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct HotkeyEvent {
     pub id: i32,
     pub modifiers: u32,
